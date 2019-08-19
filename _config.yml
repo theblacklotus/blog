@@ -1,1 +1,36 @@
-theme: jekyll-theme-midnight
+# Site settings
+title: "Tech blog for The Black Lotus"
+email:
+description: "Write ups for tech used in our demos"
+baseurl: ""
+url: "https://tbl.nu"
+title_description: "test test"
+google_analytics:
+disqus_account:
+addthis_id:
+post_limit: 5
+
+# Social usernames/URLs
+twitter_username:
+github_username: theblacklotus
+instagram_username:
+reddit_username:
+linkedin_link:
+google_plus_link:
+stackoverflow_link:
+xing_link:
+facebook_link:
+
+# Footer
+footer_left:
+footer_right:
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+permalink: pretty
+exclude: [vendor]

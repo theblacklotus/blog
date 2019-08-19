@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tech blog for The Black Lotus</title>
+    <description>Write ups for tech used in our demos</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 19 Aug 2019 20:12:51 +0200</pubDate>
+    <lastBuildDate>Mon, 19 Aug 2019 20:12:51 +0200</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>The Tech Behind Eon: Tooling!</title>
+        <description>&lt;p&gt;Eon represents four years of work and during this we made several iterations to
+various tools and pipelines. I’ll save the 3D scene packer and track loader for
+separate posts, but this post will cover the other aspects of our pipeline.&lt;/p&gt;
+
+&lt;h2 id=&quot;code-builds&quot;&gt;Code Builds&lt;/h2&gt;
+
+&lt;p&gt;First things first: we use cross-compilation. Our build environment works on
+Mac, Linux and Windows and produces both ADF floppy images and stand-alone test
+programs, as well as a multitude of host tools. This section will cover some of
+the details of our setup, as well as some history.&lt;/p&gt;
+
+&lt;p&gt;We started with a stripped down, assembly-only version of our A1200 demo system
+(called NewAge for some reason). We got rid of all the C code and simplified
+things down to the very basics. This is how early prototyping of things like
+the rubber cube started, in plain 68k assembly.&lt;/p&gt;
+
+&lt;h1 id=&quot;welcome&quot;&gt;Welcome&lt;/h1&gt;
+
+</description>
+        <pubDate>Mon, 19 Aug 2019 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/2019/08/19/test_post/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/08/19/test_post/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
