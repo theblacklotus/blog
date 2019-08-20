@@ -1,10 +1,11 @@
 # Site settings
-title: "Tech blog for The Black Lotus"
+title: "Tech Blog"
 email:
 description: "Write ups for tech used in our demos"
 baseurl: ""
 url: "https://tbl.nu"
-title_description: "test test"
+title_description: "This page has technical write ups for our demos. Right now we will publish various parts from Eon over the following weeks/months."
+title_image: "http://artcity.bitfellas.org/gallery/l/louie/15828_louie-logo_tbl.jpg"
 google_analytics:
 disqus_account:
 addthis_id:
