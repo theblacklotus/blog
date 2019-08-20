@@ -307,7 +307,7 @@ ul {
 		h2 {
 			margin-bottom: 30px;
 			color: $light-blue;
-			font-size: 26px;
+			font-size: 14px;
 		}
 
 		ul {
@@ -388,7 +388,6 @@ ul {
 			}
 		}
 	}
-
 }
 
 .all-posts {
@@ -411,26 +410,6 @@ ul {
 		}
 	}
 
-	#search-input {
-		position:relative;
-		width: 100%;
-		padding:6px 15px 6px 30px;
-		margin: 2px;
-		margin-top: 50px;
-
-		color:$dark;
-		background-color:$white;
-
-		border:1px solid #adc5cf;
-		border-radius:15px;
-		-moz-border-radius:15px;
-		-webkit-border-radius:15px;
-	}
-
-	#search-input:focus {
-		border: none;
-  }
-
 	.content-panel {
 		padding-left: 10px;
 		padding-right: 10px;
@@ -452,11 +431,11 @@ ul {
 	}
 
 	h2 {
-		font-size: 30px;
+		font-size: 26px;
 	}
 
 	h3 {
-		font-size: 20px;
+		font-size: 18px;
 	}
 
 	p {
@@ -568,7 +547,7 @@ ul {
 			padding-bottom: 10px;
 
 			@media (min-width: $screen-sm-min) {
-				font-size: 18px;
+				font-size: 16px;
 				padding-left: 30px;
 				padding-right: 30px;
 				padding-top: 40px;
@@ -582,23 +561,23 @@ ul {
 			img {
 				max-width: 100%;
 				padding: 10px;
-    		display: block;
-    		margin-left: auto;
-    		margin-right: auto
+                display: block;
+                margin-left: auto;
+                margin-right: auto
 			}
 
 			ul {
 				list-style-type: disc;
 			}
 
-            		ol {
+            ol {
 				list-style-type: decimal;
 			}
 
 			blockquote {
 				position: relative;
 				width: 100%;
-		    margin-left: -15px;
+		        margin-left: -15px;
 				padding-right: 10px;
 				background-color: $darker;
 				color: white;

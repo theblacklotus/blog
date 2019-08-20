@@ -5,8 +5,8 @@
     <description>Write ups for tech used in our demos</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 19 Aug 2019 20:12:51 +0200</pubDate>
-    <lastBuildDate>Mon, 19 Aug 2019 20:12:51 +0200</lastBuildDate>
+    <pubDate>Tue, 20 Aug 2019 21:19:48 +0200</pubDate>
+    <lastBuildDate>Tue, 20 Aug 2019 21:19:48 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -29,6 +29,55 @@ the rubber cube started, in plain 68k assembly.&lt;/p&gt;
 
 &lt;h1 id=&quot;welcome&quot;&gt;Welcome&lt;/h1&gt;
 
+&lt;p&gt;Test code&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        XDEF	ScenePlayerDecompressBitplaneMasks
+        @proc	ScenePlayerDecompressBitplaneMasks (a6:statep)
+
+        IFGT	SP_PROFILE_LEVEL-0
+          TBL_BEGIN_SCOPE &quot;ScenePlayerDecompressBitplaneMasks&quot;
+        ENDC
+
+        ; Fetch count of bitplane masks
+
+        @areg	countp
+        move.l	SP_COUNT_PTR(@statep),@countp
+
+        @dreg	bitplane_masks_count
+        move.b	(@countp)+,@bitplane_masks_count
+        lsl.w	#8,@bitplane_masks_count
+        move.b	(@countp)+,@bitplane_masks_count
+
+        move.l	@countp,SP_COUNT_PTR(@statep)
+        @kill	countp
+
+        IFNE	SP_PRINTF_DEBUG
+        Printf	&quot;Num bitplane masks: %lx&quot;,@bitplane_masks_count
+        ENDC
+
+        ; Decompress bitplane masks
+
+        tst.w	@bitplane_masks_count
+        beq.s	.skipBitplaneMasks
+
+        @reserve d0,a0-a1
+        lea	SP_3BIT_DECODERSTATE(@statep),a0
+        lea	SP_BITPLANEMASKS(@statep),a1
+        move.w	@bitplane_masks_count,d0
+        bsr	DecodeBitStream_3Bits_Words_Decode
+        @unreserve d0,a0-a1
+.skipBitplaneMasks
+
+        @kill	bitplane_masks_count
+
+        IFGT	SP_PROFILE_LEVEL-0
+          TBL_END_SCOPE
+        ENDC
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Test image&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/load-profile-zoomout.png&quot; alt=&quot;High-Level Profiler View&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Aug 2019 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/2019/08/19/test_post/</link>

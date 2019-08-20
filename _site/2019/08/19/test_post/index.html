@@ -88,9 +88,13 @@
           by
           <span itemprop="author">
             
+              <a rel="author" href="https://twitter.com/deplinenoise">
+            
             <span itemprop="author" itemscope itemtype="http://schema.org/Person">
               <span itemprop="name">Andreas Fredriksson (dep/TBL)</span>
             </span>
+            
+              </a>
             
           </span>
           
@@ -127,6 +131,55 @@ the rubber cube started, in plain 68k assembly.</p>
 
 <h1 id="welcome">Welcome</h1>
 
+<p>Test code</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        XDEF	ScenePlayerDecompressBitplaneMasks
+        @proc	ScenePlayerDecompressBitplaneMasks (a6:statep)
+
+        IFGT	SP_PROFILE_LEVEL-0
+          TBL_BEGIN_SCOPE "ScenePlayerDecompressBitplaneMasks"
+        ENDC
+
+        ; Fetch count of bitplane masks
+
+        @areg	countp
+        move.l	SP_COUNT_PTR(@statep),@countp
+
+        @dreg	bitplane_masks_count
+        move.b	(@countp)+,@bitplane_masks_count
+        lsl.w	#8,@bitplane_masks_count
+        move.b	(@countp)+,@bitplane_masks_count
+
+        move.l	@countp,SP_COUNT_PTR(@statep)
+        @kill	countp
+
+        IFNE	SP_PRINTF_DEBUG
+        Printf	"Num bitplane masks: %lx",@bitplane_masks_count
+        ENDC
+
+        ; Decompress bitplane masks
+
+        tst.w	@bitplane_masks_count
+        beq.s	.skipBitplaneMasks
+
+        @reserve d0,a0-a1
+        lea	SP_3BIT_DECODERSTATE(@statep),a0
+        lea	SP_BITPLANEMASKS(@statep),a1
+        move.w	@bitplane_masks_count,d0
+        bsr	DecodeBitStream_3Bits_Words_Decode
+        @unreserve d0,a0-a1
+.skipBitplaneMasks
+
+        @kill	bitplane_masks_count
+
+        IFGT	SP_PROFILE_LEVEL-0
+          TBL_END_SCOPE
+        ENDC
+</code></pre></div></div>
+
+<p>Test image</p>
+
+<p><img src="/assets/load-profile-zoomout.png" alt="High-Level Profiler View" /></p>
 </span>
 
         
