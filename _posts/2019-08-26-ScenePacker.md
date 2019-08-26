@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "The Tech Behind Eon: Scene Packing"
+author: Andreas Fredriksson (dep/TBL)
+author_link: https://twitter.com/deplinenoise
+---
+
 # The Tech Behind Eon: Scene Packing
 
 by Andreas Fredriksson (dep/TBL)
