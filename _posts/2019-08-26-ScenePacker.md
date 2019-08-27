@@ -5,8 +5,6 @@ author: Andreas Fredriksson (dep/TBL)
 author_link: https://twitter.com/deplinenoise
 ---
 
-# The Tech Behind Eon: Scene Packing
-
 This post describe the 3D scene packing and playing in our A500 demo Eon.
 
 ![woman](/assets/woman.png)
