@@ -134,9 +134,7 @@ predictable:
 
 The blitter is fast enough to clear 3 bitplanes at 320x180 and fill three
 bitplanes at 320x180 at 25 Hz, but that doesn't leave enough time to draw the
-actual lines with the blitter. So we do that using the CPU.
-
-We will do a separate post the details the line rendering.
+actual lines with the blitter. So we do that using the CPU. We will do a separate post the details the line rendering.
 
 The high-level logic in the render loop looks something like this:
 
