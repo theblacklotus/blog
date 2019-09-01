@@ -26,7 +26,7 @@ We use four buffers for rendering:
 3. Blitter-fill
 4. Display
 
-The clear and blitter-fill are performed by a series of interrupt-driven blits.
+The clear and blitter-fill are performed by a pair of interrupt-driven blits.
 Line drawing is done using the CPU. The buffers are rotated every 2nd frame.
 
 The clearing and blitter fill are straightforward; the interesting bits happen
