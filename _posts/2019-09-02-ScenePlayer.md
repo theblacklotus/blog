@@ -58,7 +58,7 @@ Each frame consists of a number of line strips. A line strip is N+1 points that 
 ```
 
 In order to reduce the data formats, consecutive points that are close to each
-other are encoded using 3-bit X/Y deltas. Points that are further apart are stored as
+other are encoded using 6-bit X/Y deltas. Points that are further apart are stored as
 full 16-bit positions. The mask value is the XOR of the colour on the left versus
 the right side of the line.
 
