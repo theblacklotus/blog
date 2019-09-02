@@ -131,13 +131,13 @@ overhead and per-line setup cost.
 This is the innerloop for a line that is to be rendered to bitplane 1 and 3:
 ```m68k
 		REPT	179
-		bchg	d2,(a0,d2.w)	; draw pixel in bpl1
-		bchg	d2,(a2,d2.w)	; draw pixel in bpl3
+		bchg	d2,(a0,d0.w)	; draw pixel in bpl1
+		bchg	d2,(a2,d0.w)	; draw pixel in bpl3
 		addx.l	d1,d0		; advance byte-step and step down one line
 		addx.l	d3,d2		; advance bit-step
 		ENDR
-		bchg	d2,(a0,d2.w)	; draw pixel to bpl1
-		bchg	d2,(a2,d2.w)	; draw pixel to bpl3
+		bchg	d2,(a0,d0.w)	; draw pixel to bpl1
+		bchg	d2,(a2,d0.w)	; draw pixel to bpl3
 ```
 
 The line rendering uses two [DDA](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)) steppers - one for "current byte" and one for
