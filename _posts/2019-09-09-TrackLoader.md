@@ -290,53 +290,57 @@ All parts are built in two flavors:
 
 This is all handled by some custom build rules in our Tundra setup. Here is what a part definition looks like:
 
-    Part {
-        Name = "PillarOfLight_I",
-        Depends = { "util", "blitter", "copper", "sprite", "alembic_amiga", "palette_flicker" },
-        Sources = {
-            "Projects/Pandora/PillarOfLight_I/PillarOfLight_I.c",
-            "Projects/Pandora/PillarOfLight_I/PillarOfLight_I.d68",
-            ScanIncBins { Source = "Projects/Pandora/PillarOfLight_I/PillarOfLight_I.c" },
-        },
-        Config = { "amiga" }
-    }
+```lua
+Part {
+    Name = "PillarOfLight_I",
+    Depends = { "util", "blitter", "copper", "sprite", "alembic_amiga", "palette_flicker" },
+    Sources = {
+        "Projects/Pandora/PillarOfLight_I/PillarOfLight_I.c",
+        "Projects/Pandora/PillarOfLight_I/PillarOfLight_I.d68",
+        ScanIncBins { Source = "Projects/Pandora/PillarOfLight_I/PillarOfLight_I.c" },
+    },
+    Config = { "amiga" }
+}
+```
 
 We then collect a master table of the parts in another Lua file that can be
 consumed both by the build system (to manage build dependencies) and by the
 layout tool. The file looks like this:
 
-    BeginFloppy("disk1.adf")
-    Bootblock("Bootblock")
-    Loader("Loader")
-    Music("Data/Music/P61.sketch-45", "Data/Music/SMP.sketch-45", "Data/Music/samples.bin", 206568)
-    Part("TBLLogo", 0)
-    Part("MobileIntro", PatternToFrameIndex(4))
-    Part("SpaceIntro", PatternToFrameIndex(7) - 100)
-    Part("SolarEclipse", PatternToFrameIndex(10))
-    Part("SpaceDescend", PatternToFrameIndex(14))
-    Part("ForestLines", PatternToFrameIndex(18))
-    Part("PillarOfLight_I", PatternToFrameIndex(20))
-    Part("PillarOfLight_II", PatternToFrameIndex(24))
-    Part("SpaceAscend", PatternToFrameIndex(28))
-    Part("ParticleSphere", PatternToFrameIndex(30))
-    Part("AlleyScenePart1", PatternToFrameIndex(34))
-    Part("AlleyScenePart3", PatternToFrameIndex(38))
-    EndFloppy()
+```lua
+BeginFloppy("disk1.adf")
+Bootblock("Bootblock")
+Loader("Loader")
+Music("Data/Music/P61.sketch-45", "Data/Music/SMP.sketch-45", "Data/Music/samples.bin", 206568)
+Part("TBLLogo", 0)
+Part("MobileIntro", PatternToFrameIndex(4))
+Part("SpaceIntro", PatternToFrameIndex(7) - 100)
+Part("SolarEclipse", PatternToFrameIndex(10))
+Part("SpaceDescend", PatternToFrameIndex(14))
+Part("ForestLines", PatternToFrameIndex(18))
+Part("PillarOfLight_I", PatternToFrameIndex(20))
+Part("PillarOfLight_II", PatternToFrameIndex(24))
+Part("SpaceAscend", PatternToFrameIndex(28))
+Part("ParticleSphere", PatternToFrameIndex(30))
+Part("AlleyScenePart1", PatternToFrameIndex(34))
+Part("AlleyScenePart3", PatternToFrameIndex(38))
+EndFloppy()
 
-    BeginFloppy("disk2.adf")
-    RawString("TBL-2019")
-    Part("TexturedRubberCube", PatternToFrameIndex(46))
-    Part("TransitionEffect0", PatternToFrameIndex(50))
-    Part("WomanFlatWideShot", PatternToFrameIndex(52))
-    Part("WomanFlatShade", PatternToFrameIndex(56))
-    Part("WomanFlatWideShot2", PatternToFrameIndex(64))
-    Part("WomanFlatShadePart3", PatternToFrameIndex(68) - 4)
-    Part("WomanFlatShadeFloat", PatternToFrameIndex(78))
-    Part("WomanFlatShadeFloat2", PatternToFrameIndex(80))
-    Part("FloatingInSpace", PatternToFrameIndex(82))
-    Part("SolarDeclipse", PatternToFrameIndex(84))
-    Part("EndLogoCredits", PatternToFrameIndex(86))
-    EndFloppy()
+BeginFloppy("disk2.adf")
+RawString("TBL-2019")
+Part("TexturedRubberCube", PatternToFrameIndex(46))
+Part("TransitionEffect0", PatternToFrameIndex(50))
+Part("WomanFlatWideShot", PatternToFrameIndex(52))
+Part("WomanFlatShade", PatternToFrameIndex(56))
+Part("WomanFlatWideShot2", PatternToFrameIndex(64))
+Part("WomanFlatShadePart3", PatternToFrameIndex(68) - 4)
+Part("WomanFlatShadeFloat", PatternToFrameIndex(78))
+Part("WomanFlatShadeFloat2", PatternToFrameIndex(80))
+Part("FloatingInSpace", PatternToFrameIndex(82))
+Part("SolarDeclipse", PatternToFrameIndex(84))
+Part("EndLogoCredits", PatternToFrameIndex(86))
+EndFloppy()
+```
 
 The build system and the layout tool can source this file with different
 definitions for the functions used (like `Part` and `Loader`) to do the
@@ -347,26 +351,28 @@ This system is neat, because touching a single shared source file will
 rebuild all configurations and variants needed, all in parallel with full
 dependency checking. Here is a sample session just touching a source file:
 
-    ~/repo/newage_a500 (master) > touch Projects/Pandora/SpaceIntro/SpaceIntro.d68
-    ~/repo/newage_a500 (master) > tundra2 amiga-mac-debug
-    Deluxe68 t2-output/amiga-mac-debug-default/__SpaceIntro/SpaceIntro-d68-7835eb2d84a80c5cf29f126527b3f236.s
-    Asm t2-output/amiga-mac-debug-default/__SpaceIntro/SpaceIntro-d68-7835eb2d84a80c5cf29f126527b3f236-s-16d9d6529e7fd026871b4d8a5c06ba8e.o
-    Program t2-output/amiga-mac-debug-default/SpaceIntroTest
-    Program t2-output/amiga-mac-debug-default/SpaceIntroFloppyVersion
-    StandaloneFloppyLayout t2-output/amiga-mac-debug-default/SpaceIntro.adf t2-output/amiga-mac-debug-default/SpaceIntro.txt
-    Program t2-output/amiga-mac-debug-default/SpaceIntroTestMusic
-    FloppyLayout Projects/Pandora/FloppySpec.lua
-    disk1.adf: used size: 870180 bytes (30940 bytes free)
-    disk2.adf: used size: 886300 bytes (14820 bytes free)
-    CreateEmbeddingAsm t2-output/amiga-mac-debug-default/embedded-disk2.adf
-    CreateEmbeddingAsm t2-output/amiga-mac-debug-default/embedded-disk1.adf
-    FloppyLayout Projects/Pandora/FloppySpec.lua
-    disk1.adf: used size: 887682 bytes (13438 bytes free)
-    disk2.adf: used size: 886300 bytes (14820 bytes free)
-    Asm t2-output/amiga-mac-debug-default/__InMemoryLoader/_embed_disk1-s-cab0c383b465a0c030ad8a1dd50f3952.o
-    Asm t2-output/amiga-mac-debug-default/__InMemoryLoader/_embed_disk0-s-cab0c383b465a0c030ad8a1d324ab482.o
-    Program t2-output/amiga-mac-debug-default/InMemoryLoader
-    *** build success (3.05 seconds)
+```text
+~/repo/newage_a500 (master) > touch Projects/Pandora/SpaceIntro/SpaceIntro.d68
+~/repo/newage_a500 (master) > tundra2 amiga-mac-debug
+Deluxe68 t2-output/amiga-mac-debug-default/__SpaceIntro/SpaceIntro-d68-7835eb2d84a80c5cf29f126527b3f236.s
+Asm t2-output/amiga-mac-debug-default/__SpaceIntro/SpaceIntro-d68-7835eb2d84a80c5cf29f126527b3f236-s-16d9d6529e7fd026871b4d8a5c06ba8e.o
+Program t2-output/amiga-mac-debug-default/SpaceIntroTest
+Program t2-output/amiga-mac-debug-default/SpaceIntroFloppyVersion
+StandaloneFloppyLayout t2-output/amiga-mac-debug-default/SpaceIntro.adf t2-output/amiga-mac-debug-default/SpaceIntro.txt
+Program t2-output/amiga-mac-debug-default/SpaceIntroTestMusic
+FloppyLayout Projects/Pandora/FloppySpec.lua
+disk1.adf: used size: 870180 bytes (30940 bytes free)
+disk2.adf: used size: 886300 bytes (14820 bytes free)
+CreateEmbeddingAsm t2-output/amiga-mac-debug-default/embedded-disk2.adf
+CreateEmbeddingAsm t2-output/amiga-mac-debug-default/embedded-disk1.adf
+FloppyLayout Projects/Pandora/FloppySpec.lua
+disk1.adf: used size: 887682 bytes (13438 bytes free)
+disk2.adf: used size: 886300 bytes (14820 bytes free)
+Asm t2-output/amiga-mac-debug-default/__InMemoryLoader/_embed_disk1-s-cab0c383b465a0c030ad8a1dd50f3952.o
+Asm t2-output/amiga-mac-debug-default/__InMemoryLoader/_embed_disk0-s-cab0c383b465a0c030ad8a1d324ab482.o
+Program t2-output/amiga-mac-debug-default/InMemoryLoader
+*** build success (3.05 seconds)
+```
 
 This takes just 3 seconds on an old macbook pro, so it's pretty speedy.
 
@@ -396,63 +402,63 @@ This data is then LZ4 compressed as well.
 
 The runtime relocation patcher looks like this (in d68 form):
 
-            @cproc ldr_patch_relocs(a0:chip_base,a1:fast_base,a2:relocs,d0:relocs_size)
+```m68k
+@cproc ldr_patch_relocs(a0:chip_base,a1:fast_base,a2:relocs,d0:relocs_size)
+                @areg	relocs_end
+                lea.l	(@relocs,@relocs_size.l),@relocs_end
+                @kill	relocs_size
 
-            @areg	relocs_end
-            lea.l	(@relocs,@relocs_size.l),@relocs_end
-            @kill	relocs_size
+                Printf	"Patching relocs relocs=%p, chip_base=%p, fast_base=%p, relocs_end=%p",@relocs,@chip_base,@fast_base,@relocs_end
 
-            Printf	"Patching relocs relocs=%p, chip_base=%p, fast_base=%p, relocs_end=%p",@relocs,@chip_base,@fast_base,@relocs_end
+.control_loop	  cmp.l	@relocs,@relocs_end
+                beq.s	.done
 
-    .control_loop	cmp.l	@relocs,@relocs_end
-            beq.s	.done
+                @dreg	ctrl
 
-            @dreg	ctrl
+.section
+                ;Printf	"Pulling from relocs=%p",@relocs
+                move.w	(@relocs)+,@ctrl		; pull control word
 
-    .section
-            ;Printf	"Pulling from relocs=%p",@relocs
-            move.w	(@relocs)+,@ctrl		; pull control word
+                ; Use lower two bits to figure out src/dst
+                @dreg	adjust
+                @areg	patch_seg
 
-            ; Use lower two bits to figure out src/dst
-            @dreg	adjust
-            @areg	patch_seg
+                @dreg	mask
+                move.w	#$7fff,@mask
 
-            @dreg	mask
-            move.w	#$7fff,@mask
+                move.l	@chip_base,@adjust
+                lsr.w	#1,@ctrl
+                bcc.s	.dst_ok
+                move.l	@fast_base,@adjust
+.dst_ok
+                move.l	@chip_base,@patch_seg
+                lsr.w	#1,@ctrl
+                bcc.s	.src_ok
+                move.l	@fast_base,@patch_seg
+.src_ok
+                @rename	ctrl count
+                ;Printf	"Patching relocs in seg %p, predec count=%d",@patch_seg,@count
+.patch_loop
+                @dreg	d
+                moveq.l	#0,@d
+                move.w	(@relocs)+,@d
+                bpl.s	.patch
 
-            move.l	@chip_base,@adjust
-            lsr.w	#1,@ctrl
-            bcc.s	.dst_ok
-            move.l	@fast_base,@adjust
-    .dst_ok
-            move.l	@chip_base,@patch_seg
-            lsr.w	#1,@ctrl
-            bcc.s	.src_ok
-            move.l	@fast_base,@patch_seg
-    .src_ok
-            @rename	ctrl count
-            ;Printf	"Patching relocs in seg %p, predec count=%d",@patch_seg,@count
-    .patch_loop
-            @dreg	d
-            moveq.l	#0,@d
-            move.w	(@relocs)+,@d
-            bpl.s	.patch
+.long           and.w	@mask,@d
+                swap	@d
+                move.w	(@relocs)+,@d
 
-    .long	and.w	@mask,@d
-            swap	@d
-            move.w	(@relocs)+,@d
+.patch
+                add.l	@d,@patch_seg
+                ;Printf	"Adding %p at %p, delta=%ld",@adjust,@patch_seg,@d
+                add.l	@adjust,(@patch_seg)
+                dbf.s	@count,.patch_loop
+                @kill	count,adjust,patch_seg
 
-    .patch
-            add.l	@d,@patch_seg
-            ;Printf	"Adding %p at %p, delta=%ld",@adjust,@patch_seg,@d
-            add.l	@adjust,(@patch_seg)
-            dbf.s	@count,.patch_loop
-            @kill	count,adjust,patch_seg
-
-            bra.s	.control_loop
-
-    .done
-            @endproc
+                bra.s	.control_loop
+.done
+@endproc
+```
 
 
 ## Standalone version
