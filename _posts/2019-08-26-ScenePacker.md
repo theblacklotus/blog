@@ -5,7 +5,7 @@ author: Andreas Fredriksson (dep/TBL)
 author_link: https://twitter.com/deplinenoise
 ---
 
-This post describe the 3D scene packing and playing in our A500 demo Eon.
+This post describes the 3D scene packing and playing in our A500 demo Eon.
 
 ![woman](/assets/woman.png)
 
