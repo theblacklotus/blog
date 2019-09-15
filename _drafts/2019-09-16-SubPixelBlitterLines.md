@@ -17,3 +17,9 @@ The result would have been jittery without subpixel precision. 3 bits of subpixe
 
 For an in-depth review of how the subpixelled blitter line implementation works, see [the source code repository](https://github.com/Kalmalyzer/subpixel-blitter-line).
 The repository describes the algorithm, and contains a reference implementation.
+
+Why didn't we use this tech in more places than this single part? In some places, we chose not to use it, because CPU constraints
+(slower line setup) would force us to use fewer lines. In other places, we chose not to use it, because disk space constraints
+(more bits to store per preprocessed vertex) would force us to use fewer lines. In one case, we wanted to use it, but
+we were running into really strange bugs; we were not willing to invest the time to figure out what was going wrong,
+so we went with a non-subpixelled line drawer instead.
